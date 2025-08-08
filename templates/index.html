@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Car Price Predictor</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="title">Car Price Predictor</div>
+
+        <form action="/" method="POST">
+            <div class="form-grid">
+
+                <div class="inputfield">
+                    <label>Brand</label>
+                    <select name="brand" required>
+                        {% for option in ['BMW','Chevrolet','Ford','Honda','Hyundai','Kia','Nissan','Tesla','Toyota','Volkswagen'] %}
+                            <option value="{{ option }}" {% if form_data.get('brand') == option %}selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="inputfield">
+                    <label>Transmission</label>
+                    <select name="transmission" required>
+                        {% for option in ['Automatic','Manual'] %}
+                            <option value="{{ option }}" {% if form_data.get('transmission') == option %}selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="inputfield">
+                    <label>Fuel Type</label>
+                    <select name="fuel_type" required>
+                        {% for option in ['Diesel','Electric','Petrol'] %}
+                            <option value="{{ option }}" {% if form_data.get('fuel_type') == option %}selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="inputfield">
+                    <label>Color</label>
+                    <select name="color" required>
+                        {% for option in ['Black','Blue','Gray','Red','Silver','White'] %}
+                            <option value="{{ option }}" {% if form_data.get('color') == option %}selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="inputfield">
+                    <label>Engine CC</label>
+                    <input type="number" name="engine_cc" required value="{{ form_data.get('engine_cc', '') }}">
+                </div>
+
+                <div class="inputfield">
+                    <label>Mileage (Kilometers Per Liter)</label>
+                    <input type="number" step="0.01" name="mileage_kmpl" required value="{{ form_data.get('mileage_kmpl', '') }}">
+                </div>
+
+                <div class="inputfield">
+                    <label>Make Year</label>
+                    <input type="number" name="make_year" required value="{{ form_data.get('make_year', '') }}">
+                </div>
+
+                <div class="inputfield">
+                    <label>Owner Count</label>
+                    <input type="number" name="owner_count" required value="{{ form_data.get('owner_count', '') }}">
+                </div>
+
+                <div class="inputfield">
+                    <label>Service History</label>
+                    <select name="service_history" required>
+                        {% for option in ['Full','Partial'] %}
+                            <option value="{{ option }}" {% if form_data.get('service_history') == option %}selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="inputfield">
+                    <label>Insurance Valid</label>
+                    <select name="insurance_valid" required>
+                        {% for option in ['Yes','No'] %}
+                            <option value="{{ option }}" {% if form_data.get('insurance_valid') == option %}selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="submit-btn">
+                    <input type="submit" value="Predict Price">
+                </div>
+            </div>
+        </form>
+
+        <div class="result">
+            {% if pred_value %}
+                <p><strong>Estimated Price:</strong> {{ pred_value }}</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
